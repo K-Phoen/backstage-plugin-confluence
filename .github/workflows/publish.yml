@@ -41,6 +41,8 @@ jobs:
     if: needs.detect_changes.outputs.frontend_needs_release == 'true'
 
     steps:
+      - uses: actions/checkout@v3
+
       - uses: .github/actions/release-plugin@main
         with:
           plugin-path: 'plugins/search-confluence'
@@ -53,6 +55,8 @@ jobs:
     if: needs.detect_changes.outputs.backend_needs_release == 'true'
 
     steps:
+      - uses: actions/checkout@v3
+
       - uses: .github/actions/release-plugin@main
         with:
           plugin-path: 'plugins/search-confluence-backend'
