@@ -10,7 +10,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/K-Phoen/backstage-plugin-confluence.git"
+    "url": "https://github.com/K-Phoen/backstage-plugin-confluence.git",
+    "directory": "plugins/search-confluence-backend"
   },
   "publishConfig": {
     "access": "public",
