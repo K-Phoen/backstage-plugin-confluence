@@ -4,6 +4,12 @@ This plugin integrates Confluence documents to Backstage' search engine.
 
 **Note:** it is used in combination with its [backend counter-part](../search-confluence-backend/).
 
+## How does it look?
+
+Search results:
+
+![Search results](./docs/confluence_search_result.png)
+
 ## Installation
 
 Add the plugin to your frontend app:

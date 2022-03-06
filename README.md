@@ -17,7 +17,7 @@ Find [installation instructions](./docs/index.md#installation) in the documentat
 
 Confluence search plugin:
 
-![Confluence search result](./docs/confluence_search_result.png)
+![Confluence search result](./plugins/search-confluence/docs/confluence_search_result.png)
 
 ## License
 
