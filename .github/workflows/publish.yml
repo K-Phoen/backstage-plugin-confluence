@@ -1,7 +1,7 @@
 name: Publish
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   detect_changes:
@@ -14,11 +14,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Detect changed files in search-confluence
         id: frontend-changed-files
         uses: tj-actions/changed-files@v17.2
         with:
+          since_last_remote_commit: "true"
           files: |
             plugins/search-confluence/package.json
 
@@ -26,6 +29,7 @@ jobs:
         id: backend-changed-files
         uses: tj-actions/changed-files@v17.2
         with:
+          since_last_remote_commit: "true"
           files: |
             plugins/search-confluence-backend/package.json
 
