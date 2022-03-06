@@ -1,0 +1,54 @@
+{
+    "name": "root",
+    "version": "1.0.0",
+    "private": true,
+    "engines": {
+      "node": "14 || 16"
+    },
+    "scripts": {
+      "build": "lerna run build",
+      "tsc": "tsc",
+      "tsc:full": "tsc --skipLibCheck false --incremental false",
+      "clean": "backstage-cli clean && lerna run clean",
+      "diff": "lerna run diff --",
+      "test": "lerna run test --since origin/main -- --coverage",
+      "test:all": "lerna run test -- --coverage",
+      "lint": "lerna run lint --since origin/main --",
+      "lint:all": "lerna run lint --",
+      "create-plugin": "backstage-cli create-plugin --scope kphoen --no-private",
+      "remove-plugin": "backstage-cli remove-plugin"
+    },
+    "workspaces": {
+      "packages": [
+        "plugins/**"
+      ]
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+      "@backstage/cli": "^0.15.1",
+      "@spotify/prettier-config": "^12.0.0",
+      "@types/webpack": "^5.28.0",
+      "concurrently": "^6.0.0",
+      "eslint-plugin-notice": "^0.9.10",
+      "lerna": "^4.0.0",
+      "prettier": "^2.3.2",
+      "typescript": "~4.5.4"
+    },
+    "prettier": "@spotify/prettier-config",
+    "lint-staged": {
+      "*.{js,jsx,ts,tsx}": [
+        "eslint --fix",
+        "prettier --write"
+      ],
+      "*.{json,md}": [
+        "prettier --write"
+      ]
+    },
+    "jest": {
+      "transformModules": [
+        "@asyncapi/react-component"
+      ]
+    }
+  }
+  

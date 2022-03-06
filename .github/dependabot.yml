@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    labels:
+      - dependencies
+  - package-ecosystem: "github-actions"
+    directory: "/" # Must be set to "/" to check for workflow files in .github/workflows
+    schedule:
+      interval: "weekly"
