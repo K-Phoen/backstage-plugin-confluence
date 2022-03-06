@@ -43,9 +43,31 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/release-plugin
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
         with:
-          plugin-path: 'plugins/search-confluence'
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Generate types
+        run: yarn tsc
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish if version has been updated
+        uses: pascalgn/npm-publish-action@1.3.8
+        with:
+          workspace: 'plugins/search-confluence'
+          tag_name: "v%s"
+          tag_message: "v%s"
+          commit_pattern: "^Release (\\S+)"
+        env: # More info about the environment variables in the README
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
 
   publish_backend:
     name: Publish search-confluence-backend on NPM
@@ -57,6 +79,29 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: ./.github/actions/release-plugin
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v3
         with:
-          plugin-path: 'plugins/search-confluence-backend'
+          node-version: '16'
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Generate types
+        run: yarn tsc
+
+      - name: Build
+        run: yarn build
+
+      - name: Publish if version has been updated
+        uses: pascalgn/npm-publish-action@1.3.8
+        with:
+          workspace: 'plugins/search-confluence-backend'
+          tag_name: "v%s"
+          tag_message: "v%s"
+          commit_pattern: "^Release (\\S+)"
+        env: # More info about the environment variables in the README
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+
