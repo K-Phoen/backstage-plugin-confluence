@@ -1,4 +1,4 @@
-# Confluence search plugin
+# Confluence search plugin [![](https://img.shields.io/npm/v/@k-phoen/backstage-plugin-confluence.svg)](https://www.npmjs.com/package/@k-phoen/backstage-plugin-confluence)
 
 This plugin integrates Confluence documents to Backstage' search engine.
 
