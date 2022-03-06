@@ -15,7 +15,7 @@ Search results:
 Add the plugin to your frontend app:
 
 ```bash
-cd packages/frontend && yarn add @k-phoen/backstage-plugin-confluence
+cd packages/app && yarn add @k-phoen/backstage-plugin-confluence
 ```
 
 Nicely display Confluence search results:
