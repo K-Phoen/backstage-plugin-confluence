@@ -42,9 +42,8 @@ import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
 <SearchResult>
   {({ results }) => (
     <List>
-      {results.map(result => {
-        // result.type is the index type defined by the collator.
-        switch (result.type) {
+      {results.map(({ type, document }) => {
+        switch (type) {
           case 'confluence':
             return (
               <ConfluenceResultListItem
