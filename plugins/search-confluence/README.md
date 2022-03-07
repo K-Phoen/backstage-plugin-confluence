@@ -26,6 +26,18 @@ Nicely display Confluence search results:
 import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
 
 // ...
+<SearchType.Accordion
+  name="Result Type"
+  defaultValue="software-catalog"
+  types={[
+  // ...
+    {
+      value: 'confluence',
+      name: 'Confluence',
+      icon: <DocsIcon />,
+    },
+  ]}
+/>
 
 <SearchResult>
   {({ results }) => (
