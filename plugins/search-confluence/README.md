@@ -36,8 +36,8 @@ import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
           case 'confluence':
             return (
               <ConfluenceResultListItem
-                key={result.document.location}
-                result={result.document}
+                key={document.location}
+                result={document}
               />
             );
           // ...

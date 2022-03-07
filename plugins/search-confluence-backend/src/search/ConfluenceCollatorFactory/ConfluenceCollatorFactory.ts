@@ -11,7 +11,7 @@ type ConfluenceCollatorOptions = {
 
     parallelismLimit: number;
 
-    orgName: string;
+    confluenceUrl: string;
     spaces: string[];
     auth: {
         username: string;
@@ -31,7 +31,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     private logger: Logger;
 
     private parallelismLimit: number;
-    private orgName: string;
+    private confluenceUrl: string;
     private spaces: string[];
     private auth: {username: string, password: string};
 
@@ -47,7 +47,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
 
             parallelismLimit: options.parallelismLimit || 15,
 
-            orgName: config.getString('confluence.org'),
+            confluenceUrl: config.getString('confluence.url'),
             spaces: config.getStringArray('confluence.spaces'),
             auth: {
                 username: config.getString('confluence.auth.username'),
@@ -58,9 +58,9 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
 
     private constructor(options: ConfluenceCollatorOptions) {
         this.logger = options.logger;
-        
+
         this.parallelismLimit = options.parallelismLimit;
-        this.orgName = options.orgName;
+        this.confluenceUrl = options.confluenceUrl;
         this.spaces = options.spaces;
         this.auth = options.auth;
     }
@@ -106,7 +106,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         const data = await this.get(
             `${this.confluenceBase()}/rest/api/space?&limit=1000&type=global&status=current`,
         );
-        
+
         if (!data.results) {
             return [];
         }
@@ -210,6 +210,6 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     }
 
     private confluenceBase(): string {
-        return `https://${this.orgName}.atlassian.net/wiki`;
+        return `${this.confluenceUrl}`;
     }
 }
