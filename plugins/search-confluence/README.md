@@ -26,18 +26,29 @@ Nicely display Confluence search results:
 import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
 
 // ...
+<SearchType.Accordion
+  name="Result Type"
+  defaultValue="software-catalog"
+  types={[
+  // ...
+    {
+      value: 'confluence',
+      name: 'Confluence',
+      icon: <DocsIcon />,
+    },
+  ]}
+/>
 
 <SearchResult>
   {({ results }) => (
     <List>
-      {results.map(result => {
-        // result.type is the index type defined by the collator.
-        switch (result.type) {
+      {results.map(({ type, document }) => {
+        switch (type) {
           case 'confluence':
             return (
               <ConfluenceResultListItem
-                key={result.document.location}
-                result={result.document}
+                key={document.location}
+                result={document}
               />
             );
           // ...

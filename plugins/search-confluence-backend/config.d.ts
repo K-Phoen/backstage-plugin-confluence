@@ -1,10 +1,10 @@
 export interface Config {
   confluence: {
     /**
-     * Confluence organization
+     * Confluence base URL
      * @visibility backend
      */
-    org: string;
+    url: string;
 
     /**
      * Spaces to index

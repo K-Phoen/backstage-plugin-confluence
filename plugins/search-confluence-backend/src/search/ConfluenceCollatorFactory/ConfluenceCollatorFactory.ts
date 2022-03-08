@@ -11,7 +11,7 @@ type ConfluenceCollatorOptions = {
 
     parallelismLimit: number;
 
-    orgName: string;
+    confluenceUrl: string;
     spaces: string[];
     auth: {
         username: string;
@@ -31,7 +31,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     private logger: Logger;
 
     private parallelismLimit: number;
-    private orgName: string;
+    private confluenceUrl: string;
     private spaces: string[];
     private auth: {username: string, password: string};
 
@@ -47,7 +47,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
 
             parallelismLimit: options.parallelismLimit || 15,
 
-            orgName: config.getString('confluence.org'),
+            confluenceUrl: config.getString('confluence.url'),
             spaces: config.getStringArray('confluence.spaces'),
             auth: {
                 username: config.getString('confluence.auth.username'),
@@ -58,9 +58,9 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
 
     private constructor(options: ConfluenceCollatorOptions) {
         this.logger = options.logger;
-        
+
         this.parallelismLimit = options.parallelismLimit;
-        this.orgName = options.orgName;
+        this.confluenceUrl = options.confluenceUrl;
         this.spaces = options.spaces;
         this.auth = options.auth;
     }
@@ -104,9 +104,9 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     /*
     private async getSpaces(): Promise<string[]> {
         const data = await this.get(
-            `${this.confluenceBase()}/rest/api/space?&limit=1000&type=global&status=current`,
+            `${this.confluenceWikiBase()}/rest/api/space?&limit=1000&type=global&status=current`,
         );
-        
+
         if (!data.results) {
             return [];
         }
@@ -136,7 +136,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         this.logger.info(`exploring space ${space}`);
 
         let next = true;
-        let requestUrl = `${this.confluenceBase()}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
+        let requestUrl = `${this.confluenceWikiBase()}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
         while (next) {
             const data = await this.get<ConfluenceDocumentList>(requestUrl);
             if (!data.results) {
@@ -146,7 +146,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
             documentsList.push(...data.results.map(result => result._links.self));
 
             if (data._links.next) {
-                requestUrl = `${this.confluenceBase()}${data._links.next}`;
+                requestUrl = `${this.confluenceWikiBase()}${data._links.next}`;
             } else {
                 next = false;
             }
@@ -166,21 +166,21 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         const ancestors: IndexableAncestorRef[] = [
             {
                 title: data.space.name,
-                location: `${this.confluenceBase()}${data.space._links.webui}`,
+                location: `${this.confluenceWikiBase()}${data.space._links.webui}`,
             },
         ];
 
         data.ancestors.forEach(ancestor => {
             ancestors.push({
                 title: ancestor.title,
-                location: `${this.confluenceBase()}${ancestor._links.webui}`,
+                location: `${this.confluenceWikiBase()}${ancestor._links.webui}`,
             });
         });
 
         return [{
             title: data.title,
             text: this.stripHtml(data.body.storage.value),
-            location: `${this.confluenceBase()}${data._links.webui}`,
+            location: `${this.confluenceWikiBase()}${data._links.webui}`,
             spaceKey: data.space.key,
             spaceName: data.space.name,
             ancestors: ancestors,
@@ -209,7 +209,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         return input.replace(/(<([^>]+)>)/gi, "");
     }
 
-    private confluenceBase(): string {
-        return `https://${this.orgName}.atlassian.net/wiki`;
+    private confluenceWikiBase(): string {
+        return `${this.confluenceUrl}/wiki`;
     }
 }

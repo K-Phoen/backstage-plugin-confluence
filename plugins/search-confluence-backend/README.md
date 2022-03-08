@@ -17,9 +17,9 @@ Configure the plugin in `app-config.yaml`:
 ```yaml
 # app-config.yaml
 confluence:
-  # Organization name
-  # Example: https://{ORG}.atlassian.net/
-  org: some-org
+  # Confluence base URL
+  # Example: https://{org-name}.atlassian.net
+  url: https://org-name.atlassian.net
 
   # List of spaces to index
   # See https://confluence.atlassian.com/conf59/spaces-792498593.html
@@ -37,6 +37,8 @@ Enable Confluence documents indexing in the search engine:
 
 ```typescript
 // packages/backend/src/plugins/search.ts
+import { ConfluenceCollatorFactory } from '@k-phoen/backstage-plugin-confluence-backend';
+
 export default async function createPlugin({
   logger,
   permissions,
