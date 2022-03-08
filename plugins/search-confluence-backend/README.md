@@ -17,9 +17,9 @@ Configure the plugin in `app-config.yaml`:
 ```yaml
 # app-config.yaml
 confluence:
-  # URL
-  # Example: https://{ORG}.atlassian.net
-  url: https://abc.atlassian.net
+  # Confluence base URL
+  # Example: https://{org-name}.atlassian.net
+  url: https://org-name.atlassian.net
 
   # List of spaces to index
   # See https://confluence.atlassian.com/conf59/spaces-792498593.html
