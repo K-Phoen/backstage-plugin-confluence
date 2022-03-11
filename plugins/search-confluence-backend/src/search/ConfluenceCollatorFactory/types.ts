@@ -31,6 +31,13 @@ export type ConfluenceDocument = ConfluenceDocumentMetadata & {
             value: string;
         };
     };
+    version: {
+        by: {
+            publicName: string,
+        },
+        when: string;
+        friendlyWhen: string;
+    }
     space: {
         key: string;
         name: string;
@@ -50,4 +57,7 @@ export type IndexableConfluenceDocument = IndexableDocument & {
     spaceKey: string;
     spaceName: string;
     ancestors: IndexableAncestorRef[];
+    lastModified: string;
+    lastModifiedFriendly: string;
+    lastModifiedBy: string;
 };

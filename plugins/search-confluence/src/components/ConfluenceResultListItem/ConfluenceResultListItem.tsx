@@ -13,6 +13,12 @@ import {
 import TextTruncate from 'react-text-truncate';
 
 const useStyles = makeStyles({
+  lastUpdated: {
+    display: 'block',
+    marginTop: '0.2rem',
+    marginBottom: '0.8rem',
+    fontSize: '0.8rem',
+  },
   excerpt: {
     lineHeight: '1.55',
   },
@@ -26,6 +32,9 @@ const useStyles = makeStyles({
 
 export type IndexableConfluenceDocument = IndexableDocument & {
   spaceName: string;
+  lastModified: string;
+  lastModifiedFriendly: string;
+  lastModifiedBy: string;
   ancestors: {
     title: string;
     location: string;
@@ -44,6 +53,7 @@ export const ConfluenceResultListItem = ({ result, lineClamp = 5 }: Props) => {
   const title = <Link to={result.location}>{result.title}</Link>;
   const excerpt = (
     <>
+      <span className={classes.lastUpdated}>Last Updated: {document.lastModifiedFriendly} by {document.lastModifiedBy}</span>
       <TextTruncate
         line={lineClamp}
         truncateText="…"

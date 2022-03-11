@@ -158,7 +158,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     private async getDocumentInfo(documentUrl: string): Promise<IndexableConfluenceDocument[]> {
         this.logger.debug(`fetching document content ${documentUrl}`);
 
-        const data = await this.get<ConfluenceDocument>(`${documentUrl}?expand=body.storage,space,ancestors`);
+        const data = await this.get<ConfluenceDocument>(`${documentUrl}?expand=body.storage,space,ancestors,version`);
         if (!data.status || data.status !== 'current') {
             return [];
         }
@@ -184,6 +184,9 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
             spaceKey: data.space.key,
             spaceName: data.space.name,
             ancestors: ancestors,
+            lastModifiedBy: data.version.by.publicName,
+            lastModified: data.version.when,
+            lastModifiedFriendly: data.version.friendlyWhen
         }];
     }
 
