@@ -104,7 +104,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     /*
     private async getSpaces(): Promise<string[]> {
         const data = await this.get(
-            `${this.confluenceWikiBase()}/rest/api/space?&limit=1000&type=global&status=current`,
+            `${this.confluenceUrl}/rest/api/space?&limit=1000&type=global&status=current`,
         );
 
         if (!data.results) {
@@ -136,7 +136,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         this.logger.info(`exploring space ${space}`);
 
         let next = true;
-        let requestUrl = `${this.confluenceWikiBase()}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
+        let requestUrl = `${this.confluenceUrl}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
         while (next) {
             const data = await this.get<ConfluenceDocumentList>(requestUrl);
             if (!data.results) {
@@ -146,7 +146,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
             documentsList.push(...data.results.map(result => result._links.self));
 
             if (data._links.next) {
-                requestUrl = `${this.confluenceWikiBase()}${data._links.next}`;
+                requestUrl = `${this.confluenceUrl}${data._links.next}`;
             } else {
                 next = false;
             }
@@ -166,21 +166,21 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         const ancestors: IndexableAncestorRef[] = [
             {
                 title: data.space.name,
-                location: `${this.confluenceWikiBase()}${data.space._links.webui}`,
+                location: `${this.confluenceUrl}${data.space._links.webui}`,
             },
         ];
 
         data.ancestors.forEach(ancestor => {
             ancestors.push({
                 title: ancestor.title,
-                location: `${this.confluenceWikiBase()}${ancestor._links.webui}`,
+                location: `${this.confluenceUrl}${ancestor._links.webui}`,
             });
         });
 
         return [{
             title: data.title,
             text: this.stripHtml(data.body.storage.value),
-            location: `${this.confluenceWikiBase()}${data._links.webui}`,
+            location: `${this.confluenceUrl}${data._links.webui}`,
             spaceKey: data.space.key,
             spaceName: data.space.name,
             ancestors: ancestors,
@@ -209,7 +209,4 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         return input.replace(/(<([^>]+)>)/gi, "");
     }
 
-    private confluenceWikiBase(): string {
-        return `${this.confluenceUrl}/wiki`;
-    }
 }
