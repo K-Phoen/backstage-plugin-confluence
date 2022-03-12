@@ -14,6 +14,7 @@ node_modules/
 
 # Generated output
 dist-types
+plugins/*/dist
 
 # Coverage info
 plugins/*/coverage
