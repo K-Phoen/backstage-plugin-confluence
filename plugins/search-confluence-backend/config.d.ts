@@ -1,10 +1,11 @@
 export interface Config {
   confluence: {
     /**
-     * Confluence base URL
+     * Confluence base URL for wiki API
+     * Typically: https://{org-name}.atlassian.net/wiki
      * @visibility backend
      */
-    url: string;
+    wikiUrl: string;
 
     /**
      * Spaces to index

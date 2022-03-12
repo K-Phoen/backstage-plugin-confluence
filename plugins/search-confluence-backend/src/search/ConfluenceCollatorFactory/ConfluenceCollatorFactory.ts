@@ -11,7 +11,7 @@ type ConfluenceCollatorOptions = {
 
     parallelismLimit: number;
 
-    confluenceUrl: string;
+    wikiUrl: string;
     spaces: string[];
     auth: {
         username: string;
@@ -31,7 +31,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     private logger: Logger;
 
     private parallelismLimit: number;
-    private confluenceUrl: string;
+    private wikiUrl: string;
     private spaces: string[];
     private auth: {username: string, password: string};
 
@@ -47,7 +47,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
 
             parallelismLimit: options.parallelismLimit || 15,
 
-            confluenceUrl: config.getString('confluence.url'),
+            wikiUrl: config.getString('confluence.wikiUrl'),
             spaces: config.getStringArray('confluence.spaces'),
             auth: {
                 username: config.getString('confluence.auth.username'),
@@ -60,7 +60,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         this.logger = options.logger;
 
         this.parallelismLimit = options.parallelismLimit;
-        this.confluenceUrl = options.confluenceUrl;
+        this.wikiUrl = options.wikiUrl;
         this.spaces = options.spaces;
         this.auth = options.auth;
     }
@@ -104,7 +104,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     /*
     private async getSpaces(): Promise<string[]> {
         const data = await this.get(
-            `${this.confluenceWikiBase()}/rest/api/space?&limit=1000&type=global&status=current`,
+            `${this.wikiUrl}/rest/api/space?&limit=1000&type=global&status=current`,
         );
 
         if (!data.results) {
@@ -136,7 +136,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         this.logger.info(`exploring space ${space}`);
 
         let next = true;
-        let requestUrl = `${this.confluenceWikiBase()}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
+        let requestUrl = `${this.wikiUrl}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
         while (next) {
             const data = await this.get<ConfluenceDocumentList>(requestUrl);
             if (!data.results) {
@@ -146,7 +146,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
             documentsList.push(...data.results.map(result => result._links.self));
 
             if (data._links.next) {
-                requestUrl = `${this.confluenceWikiBase()}${data._links.next}`;
+                requestUrl = `${this.wikiUrl}${data._links.next}`;
             } else {
                 next = false;
             }
@@ -166,21 +166,21 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         const ancestors: IndexableAncestorRef[] = [
             {
                 title: data.space.name,
-                location: `${this.confluenceWikiBase()}${data.space._links.webui}`,
+                location: `${this.wikiUrl}${data.space._links.webui}`,
             },
         ];
 
         data.ancestors.forEach(ancestor => {
             ancestors.push({
                 title: ancestor.title,
-                location: `${this.confluenceWikiBase()}${ancestor._links.webui}`,
+                location: `${this.wikiUrl}${ancestor._links.webui}`,
             });
         });
 
         return [{
             title: data.title,
             text: this.stripHtml(data.body.storage.value),
-            location: `${this.confluenceWikiBase()}${data._links.webui}`,
+            location: `${this.wikiUrl}${data._links.webui}`,
             spaceKey: data.space.key,
             spaceName: data.space.name,
             ancestors: ancestors,
@@ -207,9 +207,5 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
 
     private stripHtml(input: string): string {
         return input.replace(/(<([^>]+)>)/gi, "");
-    }
-
-    private confluenceWikiBase(): string {
-        return `${this.confluenceUrl}/wiki`;
     }
 }
