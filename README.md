@@ -11,7 +11,7 @@ Installation instructions for each plugin can be found in their individual READM
 
 ## Setup
 
-Find [installation instructions](./docs/index.md#installation) in the documentation.
+Each plugin's README contains installation instructions.
 
 ## How does it look?
 
