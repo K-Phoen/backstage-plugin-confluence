@@ -1359,6 +1359,14 @@
     react-use "^17.2.4"
     swr "^1.1.2"
 
+"@backstage/plugin-search-common@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@backstage/plugin-search-common/-/plugin-search-common-0.3.1.tgz#a494f30d9bd4d7e3fe1b522e72a9ad46eb31d248"
+  integrity sha512-ymGW6vviClNQhrZxNm7LdF9OIMhYwZ4c/Joha/Wip2vUdUCowPG0p757lxRjP7Hm/hpBLMp6uzj5x9GvF/lX2g==
+  dependencies:
+    "@backstage/plugin-permission-common" "^0.5.2"
+    "@backstage/types" "^0.1.3"
+
 "@backstage/release-manifests@^0.0.2":
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/@backstage/release-manifests/-/release-manifests-0.0.2.tgz#42faca60dae0c89cf6bc6fbf1b34e1e8cb2a564b"
@@ -1367,12 +1375,11 @@
     cross-fetch "^3.1.5"
 
 "@backstage/search-common@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@backstage/search-common/-/search-common-0.3.0.tgz#995996733c6e7d9fbd523bd11e184e5edda6d02a"
-  integrity sha512-8jZCFJ2mV6a8cqtmEbYHMlyPPywiqYSpuU7S6dhRwFOKMgxlVmMlzo1KG0GvNYRyPjsm7D7SKX91pOXJwv/JIw==
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@backstage/search-common/-/search-common-0.3.1.tgz#e0e7e37235b26a3aaa6d01971421d1eced4cc79f"
+  integrity sha512-6CB4Hn3qks5wenbY0Z0kxgiRXtQyMfgj1JRqHxMZE2CPpKXNMhFndQKdWj9o34m1tZARwyx+FUyqUTNdOepmiw==
   dependencies:
-    "@backstage/plugin-permission-common" "^0.5.2"
-    "@backstage/types" "^0.1.3"
+    "@backstage/plugin-search-common" "^0.3.1"
 
 "@backstage/test-utils@^0.3.0":
   version "0.3.0"
