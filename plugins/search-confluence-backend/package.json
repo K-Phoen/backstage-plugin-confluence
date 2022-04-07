@@ -30,7 +30,7 @@
   "dependencies": {
     "@backstage/config": "^1.0.0",
     "@backstage/search-common": "^0.3.2",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^3.2.3",
     "p-limit": "^3.1.0",
     "winston": "^3.2.1"
   },
