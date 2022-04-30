@@ -38,7 +38,7 @@
     "react-text-truncate": "^0.18.0"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.16.0",
+    "@backstage/cli": "^0.17.0",
     "@backstage/dev-utils": "^1.0.0",
     "@testing-library/jest-dom": "^5.10.1",
     "node-fetch": "^2.6.1"
