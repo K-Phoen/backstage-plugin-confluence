@@ -19,7 +19,7 @@ jobs:
 
       - name: Detect changed files in search-confluence
         id: frontend-changed-files
-        uses: tj-actions/changed-files@v17.2
+        uses: tj-actions/changed-files@v20.1
         with:
           since_last_remote_commit: "true"
           files: |
@@ -27,7 +27,7 @@ jobs:
 
       - name: Detect changed files in search-confluence-backend
         id: backend-changed-files
-        uses: tj-actions/changed-files@v17.2
+        uses: tj-actions/changed-files@v20.1
         with:
           since_last_remote_commit: "true"
           files: |
