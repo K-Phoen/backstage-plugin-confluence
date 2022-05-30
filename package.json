@@ -33,7 +33,7 @@
     "eslint-plugin-notice": "^0.9.10",
     "lerna": "^4.0.0",
     "prettier": "^2.3.2",
-    "typescript": "~4.5.4"
+    "typescript": "~4.7.2"
   },
   "prettier": "@spotify/prettier-config",
   "lint-staged": {
