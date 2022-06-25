@@ -1,4 +1,4 @@
-import { IndexableDocument } from "@backstage/search-common";
+import { IndexableDocument } from "@backstage/plugin-search-common";
 
 export type ConfluenceDocumentMetadata = {
     title: string;

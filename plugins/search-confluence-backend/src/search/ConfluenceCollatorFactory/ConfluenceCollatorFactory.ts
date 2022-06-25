@@ -1,5 +1,5 @@
 import { Config } from '@backstage/config';
-import { DocumentCollatorFactory, IndexableDocument } from '@backstage/search-common';
+import { DocumentCollatorFactory, IndexableDocument } from '@backstage/plugin-search-common';
 import fetch from 'node-fetch';
 import pLimit from 'p-limit';
 import { Readable } from 'stream';
