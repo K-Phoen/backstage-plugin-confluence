@@ -42,13 +42,15 @@ import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
 <SearchResult>
   {({ results }) => (
     <List>
-      {results.map(({ type, document }) => {
+      {results.map(({ type, document, highlight, rank }) => {
         switch (type) {
           case 'confluence':
             return (
               <ConfluenceResultListItem
                 key={document.location}
                 result={document}
+                highlight={highlight}
+                rank={rank}
               />
             );
           // ...
@@ -57,7 +59,6 @@ import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
     </List>
   )}
 </SearchResult>
-
 ```
 
 ## License
