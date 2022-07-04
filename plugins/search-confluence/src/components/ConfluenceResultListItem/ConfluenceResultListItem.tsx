@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from '@backstage/core-components';
-import { IndexableDocument } from '@backstage/plugin-search-common';
+import { IndexableDocument, ResultHighlight } from '@backstage/plugin-search-common';
+import { HighlightedSearchResultText } from '@backstage/plugin-search-react';
 import {
   Box,
   Breadcrumbs,
@@ -10,7 +11,7 @@ import {
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
-import TextTruncate from 'react-text-truncate';
+import { useAnalytics } from '@backstage/core-plugin-api';
 
 const useStyles = makeStyles({
   lastUpdated: {
@@ -43,24 +44,50 @@ export type IndexableConfluenceDocument = IndexableDocument & {
 
 type Props = {
   result: IndexableDocument;
-  lineClamp?: number;
+  highlight?: ResultHighlight;
+  rank?: number;
 };
 
-export const ConfluenceResultListItem = ({ result, lineClamp = 5 }: Props) => {
+export const ConfluenceResultListItem = ({ result, rank, highlight }: Props) => {
   const classes = useStyles();
+  const analytics = useAnalytics();
+  const handleClick = () => {
+    analytics.captureEvent('discover', result.title, {
+      attributes: { to: result.location },
+      value: rank,
+    });
+  };
   const document = result as IndexableConfluenceDocument;
 
-  const title = <Link to={result.location}>{result.title}</Link>;
+  const title = (
+    <Link noTrack to={result.location} onClick={handleClick}>
+      {
+        highlight?.fields.title ? (
+          <HighlightedSearchResultText
+            text={highlight.fields.title}
+            preTag={highlight.preTag}
+            postTag={highlight.postTag}
+          />
+        ) : result.title
+      }
+    </Link>
+  );
   const excerpt = (
     <>
       <span className={classes.lastUpdated}>Last Updated: {document.lastModifiedFriendly} by {document.lastModifiedBy}</span>
-      <TextTruncate
-        line={lineClamp}
-        truncateText="…"
-        text={result.text}
-        element="span"
-        containerClassName={classes.excerpt}
-      />
+      <>
+        {
+          highlight?.fields.text ? (
+            <HighlightedSearchResultText
+              text={highlight.fields.text}
+              preTag={highlight.preTag}
+              postTag={highlight.postTag}
+            />
+          ) : (
+            result.text
+          )
+        }
+      </>
 
       <Box className={classes.breadcrumbs}>
         <Breadcrumbs separator="›" maxItems={4} itemsBeforeCollapse={1} itemsAfterCollapse={2} aria-label="breadcrumb">
