@@ -1193,6 +1193,14 @@
     "@backstage/types" "^1.0.0"
     lodash "^4.17.21"
 
+"@backstage/config@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@backstage/config/-/config-1.0.3.tgz#9b27661c11b010fce974d25519c57fe28004d4a1"
+  integrity sha512-KFxtGnqTFhN9zS90SLSTcDgJpsSd3IvqfeYLN8IvqfwG2lzaYCRxWRK3XlwOe2PY6Lv98YlMEWfNw5DKw46sgA==
+  dependencies:
+    "@backstage/types" "^1.0.0"
+    lodash "^4.17.21"
+
 "@backstage/core-app-api@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@backstage/core-app-api/-/core-app-api-1.1.0.tgz#7ad4046591c5478acb4cc0ae8ad2788448af57ba"
@@ -1294,6 +1302,15 @@
     cross-fetch "^3.1.5"
     serialize-error "^8.0.1"
 
+"@backstage/errors@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@backstage/errors/-/errors-1.1.2.tgz#c5c41ee726555bab41be8349ce0d61bc48b453db"
+  integrity sha512-RJ2zW0Vlq+qqx2bjwnXrE1AgKDJxJE++S5ajdz/SdaccT/SgCqp3kVD/S/Rzylvv1PfmQ+kXN2sEp2obnyRbkQ==
+  dependencies:
+    "@backstage/types" "^1.0.0"
+    cross-fetch "^3.1.5"
+    serialize-error "^8.0.1"
+
 "@backstage/integration-react@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@backstage/integration-react/-/integration-react-1.1.4.tgz#7ab915a92bd4f62df69cf0654ad934564b8915f3"
@@ -1370,6 +1387,18 @@
     uuid "^8.0.0"
     zod "^3.11.6"
 
+"@backstage/plugin-permission-common@^0.7.0":
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/@backstage/plugin-permission-common/-/plugin-permission-common-0.7.0.tgz#aa613527645e862b76eee77837d6273a37dc7fb8"
+  integrity sha512-0uRFRLICBs79ifyaaFNL+OHUue1HZUEaaFlT8jCze5/6dTlxcG2ctTpIU6imiurDUQXKt2e40RYbSFF+2N3WBw==
+  dependencies:
+    "@backstage/config" "^1.0.3"
+    "@backstage/errors" "^1.1.2"
+    "@backstage/types" "^1.0.0"
+    cross-fetch "^3.1.5"
+    uuid "^8.0.0"
+    zod "^3.11.6"
+
 "@backstage/plugin-permission-react@^0.4.5":
   version "0.4.5"
   resolved "https://registry.yarnpkg.com/@backstage/plugin-permission-react/-/plugin-permission-react-0.4.5.tgz#c081e2a0aa9d10f6ad3a32f3f77e9176aaa3c228"
@@ -1383,11 +1412,11 @@
     swr "^1.1.2"
 
 "@backstage/plugin-search-common@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@backstage/plugin-search-common/-/plugin-search-common-1.0.1.tgz#17b4a47854daffb5795b1e63732da13ee213edbd"
-  integrity sha512-O1yaT2kl4xC2/M4EkZL2jryVWb+D+80yifT2gOOHFWiFkLVce0iCs+fIX+UFbxCqw53YQxXun3gQHYScogb8sQ==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@backstage/plugin-search-common/-/plugin-search-common-1.1.0.tgz#8b61d03fb2cf0a855dd48c28c4788311cfeb47bb"
+  integrity sha512-XCzPDkvZtOFkt4vTm4Peu5z/xNdUO4yloHO+uTEPFprdPMlbzDSuSCnHFcKWxQkjn7/KrDkQtGlTdboKfy0V5A==
   dependencies:
-    "@backstage/plugin-permission-common" "^0.6.4"
+    "@backstage/plugin-permission-common" "^0.7.0"
     "@backstage/types" "^1.0.0"
 
 "@backstage/plugin-search-react@^1.1.0":
