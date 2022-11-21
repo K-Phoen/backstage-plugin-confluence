@@ -1059,9 +1059,9 @@
   integrity sha512-5Nt88V32yciUlgr/XCWu2n9oSRD2XRBtkzGDDq4YTzXMJNty283DVi2c7xgeDPF2DN0d6fiENQAipp3oEulXTg==
 
 "@backstage/cli@^0.21.0":
-  version "0.21.0"
-  resolved "https://registry.yarnpkg.com/@backstage/cli/-/cli-0.21.0.tgz#d61078d5ede21ae0e4849a3963df0b03b1d2f113"
-  integrity sha512-j2JnyA9rnJZSLUIaSNBH4Y7uKimlz/DfBLc0ZsefIIa6jC2CzAIgmj5Nz1Zo55b59raNnImy592ZPQIrlLNDYg==
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/@backstage/cli/-/cli-0.21.1.tgz#e2dc8cf3007ec1c8a2bbcbcacc17b37282e6a231"
+  integrity sha512-GMe7NJJ/qoTXIj4BZJkgTYDUn4PEcHjVqrkGXNQXMc1cbm1rz5uyuqBi7xlzjFdwdbUlx9msjgjGeH3n/cyDMw==
   dependencies:
     "@backstage/cli-common" "^0.1.10"
     "@backstage/config" "^1.0.4"
