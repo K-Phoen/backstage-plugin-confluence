@@ -24,7 +24,7 @@
   "dependencies": {},
   "devDependencies": {
     "@backstage/cli": "^0.21.0",
-    "@spotify/prettier-config": "^12.0.0",
+    "@spotify/prettier-config": "^14.1.1",
     "@types/webpack": "^5.28.0",
     "concurrently": "^6.0.0",
     "eslint-plugin-notice": "^0.9.10",
