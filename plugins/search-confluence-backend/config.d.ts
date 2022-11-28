@@ -14,6 +14,13 @@ export interface Config {
     spaces: string[];
 
     /**
+     * CQL (Confluence query language) query of pages to index
+     * Will be combined with `spaces` configuration parameter.
+     * @visibility backend
+     */
+    query: string;
+
+    /**
      * @visibility backend
      */
     auth: {
