@@ -32,13 +32,13 @@
   },
   "dependencies": {
     "@backstage/config": "^1.0.4",
-    "@backstage/plugin-search-common": "^1.1.1",
+    "@backstage/plugin-search-common": "^1.2.0",
     "node-fetch": "^2.6.7",
     "p-limit": "^3.1.0",
     "winston": "^3.2.1"
   },
   "devDependencies": {
-    "@backstage/cli": "^0.21.0",
+    "@backstage/cli": "^0.22.0",
     "@types/node-fetch": "^2.6.1"
   },
   "files": [
