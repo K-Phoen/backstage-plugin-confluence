@@ -14,9 +14,9 @@ jobs:
           node-version: '16'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --immutable
 
-      - run: yarn lint
+      - run: yarn lint:all
 
   tests:
     name: Tests
@@ -31,7 +31,8 @@ jobs:
           node-version: '16'
           cache: 'yarn'
 
-      - run: yarn install
+      - run: yarn install --immutable
+
       - run: yarn tsc
 
       - run: yarn test:all

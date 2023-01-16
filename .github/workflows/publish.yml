@@ -1,44 +1,16 @@
-name: Publish
+name: Release
 on:
   push:
     branches: [main]
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
-  detect_changes:
-    name: Detect changes
+  release:
+    name: Create Changeset PR
     runs-on: ubuntu-latest
-
-    outputs:
-      frontend_needs_release: ${{ steps.frontend-changed-files.outputs.any_changed }}
-      backend_needs_release: ${{ steps.backend-changed-files.outputs.any_changed }}
-
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Detect changed files in search-confluence
-        id: frontend-changed-files
-        uses: tj-actions/changed-files@v17.2
-        with:
-          since_last_remote_commit: "true"
-          files: |
-            plugins/search-confluence/package.json
-
-      - name: Detect changed files in search-confluence-backend
-        id: backend-changed-files
-        uses: tj-actions/changed-files@v17.2
-        with:
-          since_last_remote_commit: "true"
-          files: |
-            plugins/search-confluence-backend/package.json
-
-  publish_frontend:
-    name: Publish search-confluence on NPM
-    runs-on: ubuntu-latest
-    needs: detect_changes
-
-    if: needs.detect_changes.outputs.frontend_needs_release == 'true'
 
     steps:
       - uses: actions/checkout@v3
@@ -46,60 +18,23 @@ jobs:
       - name: Use Node.js 16.x
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: 16.x
           cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn install
+      - name: Install Dependencies
+        run: yarn install --immutable
 
-      - name: Generate types
+      - name: Build type declarations
         run: yarn tsc
 
-      - name: Build
+      - name: Build packages
         run: yarn build
 
-      - name: Publish if version has been updated
-        uses: pascalgn/npm-publish-action@1.3.9
+      - name: Create Release Pull Request
+        uses: changesets/action@v1
         with:
-          workspace: 'plugins/search-confluence'
-          create_tag: "false"
-          commit_pattern: "^Release (\\S+)"
-        env: # More info about the environment variables in the README
+          version: yarn version
+          publish: yarn release
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
-  publish_backend:
-    name: Publish search-confluence-backend on NPM
-    runs-on: ubuntu-latest
-    needs: detect_changes
-
-    if: needs.detect_changes.outputs.backend_needs_release == 'true'
-
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Use Node.js 16.x
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'yarn'
-
-      - name: Install dependencies
-        run: yarn install
-
-      - name: Generate types
-        run: yarn tsc
-
-      - name: Build
-        run: yarn build
-
-      - name: Publish if version has been updated
-        uses: pascalgn/npm-publish-action@1.3.9
-        with:
-          workspace: 'plugins/search-confluence-backend'
-          create_tag: "false"
-          commit_pattern: "^Release (\\S+)"
-        env: # More info about the environment variables in the README
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
