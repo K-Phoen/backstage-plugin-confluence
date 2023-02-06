@@ -3727,12 +3727,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@spotify/prettier-config@npm:^12.0.0":
-  version: 12.0.0
-  resolution: "@spotify/prettier-config@npm:12.0.0"
+"@spotify/prettier-config@npm:^14.1.5":
+  version: 14.1.5
+  resolution: "@spotify/prettier-config@npm:14.1.5"
   peerDependencies:
     prettier: 2.x
-  checksum: 04732b96af895269bb8a988ba309e80bd7b87c785837e06f72ff938e8895c5a3a3211fa37b54c6a2b502e88587a437c2be3ccb486a84aff02c2f6fb4582a4a97
+  checksum: d2e600816094ee010f464159bbce31fb61404aab630bbf5e49840d8ae973bd236f3bec9b96fc0f9e63d7c62fcb08ff1418d986aeaa0782868c5f6678085513d7
   languageName: node
   linkType: hard
 
@@ -15675,7 +15675,7 @@ __metadata:
   dependencies:
     "@backstage/cli": ^0.22.0
     "@changesets/cli": ^2.18.0
-    "@spotify/prettier-config": ^12.0.0
+    "@spotify/prettier-config": ^14.1.5
     "@types/webpack": ^5.28.0
     concurrently: ^7.0.0
     eslint-plugin-notice: ^0.9.10
