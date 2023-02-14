@@ -1475,17 +1475,17 @@ __metadata:
   linkType: hard
 
 "@backstage/catalog-model@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "@backstage/catalog-model@npm:1.1.3"
+  version: 1.2.0
+  resolution: "@backstage/catalog-model@npm:1.2.0"
   dependencies:
-    "@backstage/config": ^1.0.4
-    "@backstage/errors": ^1.1.3
-    "@backstage/types": ^1.0.1
+    "@backstage/config": ^1.0.6
+    "@backstage/errors": ^1.1.4
+    "@backstage/types": ^1.0.2
     ajv: ^8.10.0
     json-schema: ^0.4.0
     lodash: ^4.17.21
     uuid: ^8.0.0
-  checksum: 51e6821be44201d012550d7429cf4dc278fdd7dc001f4f5f6339a44a7e4dc155fbd44105d0dd96ea07b409fe93cd113a5a67370a758dfd368ab7b8e18d37ee6a
+  checksum: d4e07e91e501b4ecbc9d0b754518277dd2ed93f22f801740cc539dbcbd905ba8111b1651d20fb725e44d7cd99a96faec6fd56cd51fdf8e1d7f39a6e177f31efa
   languageName: node
   linkType: hard
 
@@ -1647,6 +1647,16 @@ __metadata:
     "@backstage/types": ^1.0.2
     lodash: ^4.17.21
   checksum: 87cef5d3de2c211d57b12d575c6fc81af98e64d3763be0b6d954e979ee9ec19a2f6fd963578b2152154b799622d3e7f45a132c928451008576d75aaaa63eb69c
+  languageName: node
+  linkType: hard
+
+"@backstage/config@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@backstage/config@npm:1.0.6"
+  dependencies:
+    "@backstage/types": ^1.0.2
+    lodash: ^4.17.21
+  checksum: 5cd2b409237091eb523a61c11df49c183ad1548dce90df343c9b0204eec7147508f41c832f931f82783c458ccdcc9d9fb73511cdd373fdb023db67bc738fcc67
   languageName: node
   linkType: hard
 
