@@ -1650,6 +1650,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@backstage/config@npm:^1.0.6":
+  version: 1.0.6
+  resolution: "@backstage/config@npm:1.0.6"
+  dependencies:
+    "@backstage/types": ^1.0.2
+    lodash: ^4.17.21
+  checksum: 5cd2b409237091eb523a61c11df49c183ad1548dce90df343c9b0204eec7147508f41c832f931f82783c458ccdcc9d9fb73511cdd373fdb023db67bc738fcc67
+  languageName: node
+  linkType: hard
+
 "@backstage/core-app-api@npm:^1.2.0":
   version: 1.2.0
   resolution: "@backstage/core-app-api@npm:1.2.0"
@@ -1671,65 +1681,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/core-components@npm:^0.12.0":
-  version: 0.12.0
-  resolution: "@backstage/core-components@npm:0.12.0"
+"@backstage/core-components@npm:^0.12.0, @backstage/core-components@npm:^0.12.2":
+  version: 0.12.4
+  resolution: "@backstage/core-components@npm:0.12.4"
   dependencies:
-    "@backstage/config": ^1.0.4
-    "@backstage/core-plugin-api": ^1.1.0
-    "@backstage/errors": ^1.1.3
-    "@backstage/theme": ^0.2.16
-    "@backstage/version-bridge": ^1.0.2
-    "@material-table/core": ^3.1.0
-    "@material-ui/core": ^4.12.2
-    "@material-ui/icons": ^4.9.1
-    "@material-ui/lab": 4.0.0-alpha.57
-    "@react-hookz/web": ^15.0.0
-    "@types/react-sparklines": ^1.7.0
-    "@types/react-text-truncate": ^0.14.0
-    ansi-regex: ^6.0.1
-    classnames: ^2.2.6
-    d3-selection: ^3.0.0
-    d3-shape: ^3.0.0
-    d3-zoom: ^3.0.0
-    dagre: ^0.8.5
-    history: ^5.0.0
-    immer: ^9.0.1
-    lodash: ^4.17.21
-    pluralize: ^8.0.0
-    prop-types: ^15.7.2
-    qs: ^6.9.4
-    rc-progress: 3.4.0
-    react-helmet: 6.1.0
-    react-hook-form: ^7.12.2
-    react-markdown: ^8.0.0
-    react-sparklines: ^1.7.0
-    react-syntax-highlighter: ^15.4.5
-    react-text-truncate: ^0.19.0
-    react-use: ^17.3.2
-    react-virtualized-auto-sizer: ^1.0.6
-    react-window: ^1.8.6
-    remark-gfm: ^3.0.1
-    zen-observable: ^0.8.15
-    zod: ^3.11.6
-  peerDependencies:
-    "@types/react": ^16.13.1 || ^17.0.0
-    react: ^16.13.1 || ^17.0.0
-    react-dom: ^16.13.1 || ^17.0.0
-    react-router: 6.0.0-beta.0 || ^6.3.0
-    react-router-dom: 6.0.0-beta.0 || ^6.3.0
-  checksum: d113d62942b33b0a1290caf7ae73b223e88eb8a91c206be9a598dd4abd103faeec747dec76145af33e7e7ceb5209fdeefb507cbc21d8260681d15c449c005440
-  languageName: node
-  linkType: hard
-
-"@backstage/core-components@npm:^0.12.2":
-  version: 0.12.2
-  resolution: "@backstage/core-components@npm:0.12.2"
-  dependencies:
-    "@backstage/config": ^1.0.5
-    "@backstage/core-plugin-api": ^1.2.0
+    "@backstage/config": ^1.0.6
+    "@backstage/core-plugin-api": ^1.4.0
     "@backstage/errors": ^1.1.4
-    "@backstage/theme": ^0.2.16
+    "@backstage/theme": ^0.2.17
     "@backstage/version-bridge": ^1.0.3
     "@material-table/core": ^3.1.0
     "@material-ui/core": ^4.12.2
@@ -1768,7 +1727,7 @@ __metadata:
     react: ^16.13.1 || ^17.0.0
     react-dom: ^16.13.1 || ^17.0.0
     react-router-dom: 6.0.0-beta.0 || ^6.3.0
-  checksum: fe8d6cf3350597653b1578f1bbbb3d9be70000e17a9c7ea9384f5f1b833794de580052dd7e589cc5b2d3bb80cfabe3dfd3b507f61c37f714822a16b3f8e968e4
+  checksum: 476160ad54a399e7393bb70fc34fc01b69519431606797fdecc974d5e826315527d8ab71af5dd4d1c8d88bfe797aa37e781fd5fd31d8293c19982704e4f7cfdc
   languageName: node
   linkType: hard
 
@@ -1805,6 +1764,24 @@ __metadata:
     react: ^16.13.1 || ^17.0.0
     react-router-dom: 6.0.0-beta.0 || ^6.3.0
   checksum: 6d768e4e7df34a3e993a504207c2b5ffd5d1edd0f4243d66b267e1d2a66d86e2640d93b5efed3571e0430e0d6c01d14d7e055521193a9d190df320cd9b731047
+  languageName: node
+  linkType: hard
+
+"@backstage/core-plugin-api@npm:^1.4.0":
+  version: 1.4.0
+  resolution: "@backstage/core-plugin-api@npm:1.4.0"
+  dependencies:
+    "@backstage/config": ^1.0.6
+    "@backstage/types": ^1.0.2
+    "@backstage/version-bridge": ^1.0.3
+    history: ^5.0.0
+    prop-types: ^15.7.2
+    zen-observable: ^0.10.0
+  peerDependencies:
+    "@types/react": ^16.13.1 || ^17.0.0
+    react: ^16.13.1 || ^17.0.0
+    react-router-dom: 6.0.0-beta.0 || ^6.3.0
+  checksum: 046d0fcb52b3110d6a926eeaf766486c753c2eeca70f7897f4ded45e0cf7da8591ec7df337433427bc50de7193e7a6d875356a027a8d1733fa07d87509e561a1
   languageName: node
   linkType: hard
 
@@ -2073,6 +2050,15 @@ __metadata:
   dependencies:
     "@material-ui/core": ^4.12.2
   checksum: 2880bea97ae66aef964130dcb474768d18d8410a161c310b2e5b7b8a5ba9503269d0dbc4abe7d02da92322cd3e174f1392b104876b9448eeea037b375e498ccf
+  languageName: node
+  linkType: hard
+
+"@backstage/theme@npm:^0.2.17":
+  version: 0.2.17
+  resolution: "@backstage/theme@npm:0.2.17"
+  dependencies:
+    "@material-ui/core": ^4.12.2
+  checksum: 4be1d9bf2c3fce611a75f3b5b80f91365dcb67b8e5a417f9c760ffbc9c6f3dd9c243082347278569ad343cf017b76ebaf2143eb9aebfa07a58513c38dbbca97e
   languageName: node
   linkType: hard
 
@@ -3513,33 +3499,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@react-hookz/deep-equal@npm:^1.0.3":
-  version: 1.0.3
-  resolution: "@react-hookz/deep-equal@npm:1.0.3"
-  checksum: d482b43746a0371094b90e1957d3e3a6aa70cbe8bd9cd88c759d8dcf21c2c1f57fbd1846b2103bccc20600e77d04d44e35c320ba9001fb5382c70a9a3385d34a
-  languageName: node
-  linkType: hard
-
 "@react-hookz/deep-equal@npm:^1.0.4":
   version: 1.0.4
   resolution: "@react-hookz/deep-equal@npm:1.0.4"
   checksum: 0923e364d309e32ee54e0850471a86488faf149d7a04ee838552cf5d54f493964623a8d742880ec82410cc1105530123f056e66dfc72b7da235d4cc93fad708f
-  languageName: node
-  linkType: hard
-
-"@react-hookz/web@npm:^15.0.0":
-  version: 15.1.0
-  resolution: "@react-hookz/web@npm:15.1.0"
-  dependencies:
-    "@react-hookz/deep-equal": ^1.0.3
-  peerDependencies:
-    js-cookie: ^3.0.1
-    react: ^16.8 || ^17 || ^18
-    react-dom: ^16.8 || ^17 || ^18
-  peerDependenciesMeta:
-    js-cookie:
-      optional: true
-  checksum: 74854629a0e86d3035f8fec97a618c79c6d8ae5a71513e6a29b717c5142109e2ec33eea835b9250686d27e9fdb66e7ccf72c7e89edf9300596fac450821130cc
   languageName: node
   linkType: hard
 
@@ -14740,20 +14703,6 @@ __metadata:
     iconv-lite: 0.4.24
     unpipe: 1.0.0
   checksum: 5362adff1575d691bb3f75998803a0ffed8c64eabeaa06e54b4ada25a0cd1b2ae7f4f5ec46565d1bec337e08b5ac90c76eaa0758de6f72a633f025d754dec29e
-  languageName: node
-  linkType: hard
-
-"rc-progress@npm:3.4.0":
-  version: 3.4.0
-  resolution: "rc-progress@npm:3.4.0"
-  dependencies:
-    "@babel/runtime": ^7.10.1
-    classnames: ^2.2.6
-    rc-util: ^5.16.1
-  peerDependencies:
-    react: ">=16.9.0"
-    react-dom: ">=16.9.0"
-  checksum: a4b243ee89ecbf1a6ca9b805337c7505f5020f549b43af90c691273a55e4a6ef5952e02b88391b1b08dfb39dcbe41751a31a5195582b6dda267afdce8cf9e22b
   languageName: node
   linkType: hard
 
