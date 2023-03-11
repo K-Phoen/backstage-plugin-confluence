@@ -14,7 +14,6 @@ import {
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
-import { useAnalytics } from '@backstage/core-plugin-api';
 
 const useStyles = makeStyles({
   lastUpdated: {
@@ -45,29 +44,25 @@ export type IndexableConfluenceDocument = IndexableDocument & {
   }[];
 };
 
-export type ConfluenceResultItemProps = {
-  result: IndexableDocument;
+export interface ConfluenceResultItemProps {
+  result?: IndexableDocument;
   highlight?: ResultHighlight;
   rank?: number;
-};
+}
 
 export const ConfluenceResultListItem = ({
   result,
-  rank,
   highlight,
 }: ConfluenceResultItemProps) => {
   const classes = useStyles();
-  const analytics = useAnalytics();
-  const handleClick = () => {
-    analytics.captureEvent('discover', result.title, {
-      attributes: { to: result.location },
-      value: rank,
-    });
-  };
   const document = result as IndexableConfluenceDocument;
 
+  if (!result) {
+    return null;
+  }
+
   const title = (
-    <Link noTrack to={result.location} onClick={handleClick}>
+    <Link noTrack to={result.location}>
       {highlight?.fields.title ? (
         <HighlightedSearchResultText
           text={highlight.fields.title}
