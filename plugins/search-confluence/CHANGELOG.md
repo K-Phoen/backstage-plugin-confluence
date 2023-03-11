@@ -1,5 +1,11 @@
 # @k-phoen/backstage-plugin-confluence
 
+## 0.0.15
+
+### Patch Changes
+
+- 2988234: Cleanup search results implementation
+
 ## 0.0.14
 
 ### Patch Changes
