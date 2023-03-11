@@ -55,10 +55,19 @@ export default async function createPlugin({
 
   // …
 
-  // Confluence documents indexing
+  // Confluence indexing
+  const halfHourSchedule = env.scheduler.createScheduledTaskRunner({
+    frequency: Duration.fromObject({ minutes: 30 }),
+    timeout: Duration.fromObject({ minutes: 15 }),
+    // A 3 second delay gives the backend server a chance to initialize before
+    // any collators are executed, which may attempt requests against the API.
+    initialDelay: Duration.fromObject({ seconds: 3 }),
+  });
   indexBuilder.addCollator({
-    defaultRefreshIntervalSeconds: 1800, // 30 min
-    factory: ConfluenceCollatorFactory.fromConfig(config, { logger }),
+    schedule: halfHourSchedule,
+    factory: ConfluenceCollatorFactory.fromConfig(env.config, {
+      logger: env.logger,
+    }),
   });
 
   // …
@@ -80,9 +89,8 @@ export default async function createPlugin({
     logger,
   });
 }
-
 ```
 
 ## License
 
-This library is under the [MIT](../LICENSE) license.
+This library is under the [MIT](../../LICENSE) license.

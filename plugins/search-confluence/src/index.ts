@@ -1,2 +1,1 @@
-export { plugin } from './plugin';
-export { ConfluenceResultListItem } from './components/ConfluenceResultListItem';
+export { confluencePlugin, ConfluenceResultListItem } from './plugin';

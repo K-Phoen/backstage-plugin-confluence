@@ -21,16 +21,16 @@ cd packages/app && yarn add @k-phoen/backstage-plugin-confluence
 Nicely display Confluence search results:
 
 ```typescript
-// packages/app/components/search/SearchPage.tsx
+// packages/app/src/components/search/SearchPage.tsx
 
+import { DocsIcon } from '@backstage/core-components';
 import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
 
 // ...
 <SearchType.Accordion
   name="Result Type"
-  defaultValue="software-catalog"
   types={[
-  // ...
+    // ...
     {
       value: 'confluence',
       name: 'Confluence',
@@ -40,27 +40,11 @@ import { ConfluenceResultListItem } from '@k-phoen/backstage-plugin-confluence';
 />
 
 <SearchResult>
-  {({ results }) => (
-    <List>
-      {results.map(({ type, document, highlight, rank }) => {
-        switch (type) {
-          case 'confluence':
-            return (
-              <ConfluenceResultListItem
-                key={document.location}
-                result={document}
-                highlight={highlight}
-                rank={rank}
-              />
-            );
-          // ...
-        }
-      })}
-    </List>
-  )}
+  // ...
+  <ConfluenceResultListItem />
 </SearchResult>
 ```
 
 ## License
 
-This library is under the [MIT](../LICENSE) license.
+This library is under the [MIT](../../LICENSE) license.
