@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from '@backstage/core-components';
-import { IndexableDocument, ResultHighlight } from '@backstage/plugin-search-common';
+import {
+  IndexableDocument,
+  ResultHighlight,
+} from '@backstage/plugin-search-common';
 import { HighlightedSearchResultText } from '@backstage/plugin-search-react';
 import {
   Box,
@@ -42,13 +45,17 @@ export type IndexableConfluenceDocument = IndexableDocument & {
   }[];
 };
 
-type Props = {
+export type ConfluenceResultItemProps = {
   result: IndexableDocument;
   highlight?: ResultHighlight;
   rank?: number;
 };
 
-export const ConfluenceResultListItem = ({ result, rank, highlight }: Props) => {
+export const ConfluenceResultListItem = ({
+  result,
+  rank,
+  highlight,
+}: ConfluenceResultItemProps) => {
   const classes = useStyles();
   const analytics = useAnalytics();
   const handleClick = () => {
@@ -61,37 +68,47 @@ export const ConfluenceResultListItem = ({ result, rank, highlight }: Props) => 
 
   const title = (
     <Link noTrack to={result.location} onClick={handleClick}>
-      {
-        highlight?.fields.title ? (
-          <HighlightedSearchResultText
-            text={highlight.fields.title}
-            preTag={highlight.preTag}
-            postTag={highlight.postTag}
-          />
-        ) : result.title
-      }
+      {highlight?.fields.title ? (
+        <HighlightedSearchResultText
+          text={highlight.fields.title}
+          preTag={highlight.preTag}
+          postTag={highlight.postTag}
+        />
+      ) : (
+        result.title
+      )}
     </Link>
   );
   const excerpt = (
     <>
-      <span className={classes.lastUpdated}>Last Updated: {document.lastModifiedFriendly} by {document.lastModifiedBy}</span>
+      <span className={classes.lastUpdated}>
+        Last Updated: {document.lastModifiedFriendly} by{' '}
+        {document.lastModifiedBy}
+      </span>
       <>
-        {
-          highlight?.fields.text ? (
-            <HighlightedSearchResultText
-              text={highlight.fields.text}
-              preTag={highlight.preTag}
-              postTag={highlight.postTag}
-            />
-          ) : (
-            result.text
-          )
-        }
+        {highlight?.fields.text ? (
+          <HighlightedSearchResultText
+            text={highlight.fields.text}
+            preTag={highlight.preTag}
+            postTag={highlight.postTag}
+          />
+        ) : (
+          result.text
+        )}
       </>
 
       <Box className={classes.breadcrumbs}>
-        <Breadcrumbs separator="›" maxItems={4} itemsBeforeCollapse={1} itemsAfterCollapse={2} aria-label="breadcrumb">
-          {document.ancestors && document.ancestors.map(ancestor => <Link to={ancestor.location}>{ancestor.title}</Link>)}
+        <Breadcrumbs
+          separator="›"
+          maxItems={4}
+          itemsBeforeCollapse={1}
+          itemsAfterCollapse={2}
+          aria-label="breadcrumb"
+        >
+          {document.ancestors &&
+            document.ancestors.map(ancestor => (
+              <Link to={ancestor.location}>{ancestor.title}</Link>
+            ))}
         </Breadcrumbs>
       </Box>
     </>
