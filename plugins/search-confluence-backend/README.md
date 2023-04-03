@@ -33,6 +33,27 @@ confluence:
     password: ${CONFLUENCE_PASSWORD}
 ```
 
+You can also use a Personal Authentication Token with:
+
+```yaml
+# app-config.yaml
+confluence:
+  # Confluence base URL for wiki API
+  # Typically: https://{org-name}.atlassian.net/wiki
+  wikiUrl: https://org-name.atlassian.net/wiki
+
+  # List of spaces to index
+  # See https://confluence.atlassian.com/conf59/spaces-792498593.html
+  spaces: [ENG]
+
+  # Authentication credentials towards Confluence API
+  auth:
+    usePAT: true
+    # While Confluence supports BASIC authentication, using an API token is preferred.
+    # See: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+    pat: ${CONFLUENCE_PAT}
+```
+
 Enable Confluence documents indexing in the search engine:
 
 ```typescript
