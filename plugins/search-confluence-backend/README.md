@@ -25,6 +25,10 @@ confluence:
   # See https://confluence.atlassian.com/conf59/spaces-792498593.html
   spaces: [ENG]
 
+  # Additional filter of pages to index. In CQL (confluence query language).
+  # See https://developer.atlassian.com/server/confluence/advanced-searching-using-cql/
+  query: 'label = "backstage"'
+
   # Authentication credentials towards Confluence API
   auth:
     username: ${CONFLUENCE_USERNAME}
