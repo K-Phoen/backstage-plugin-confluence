@@ -23,6 +23,8 @@ confluence:
 
   # List of spaces to index
   # See https://confluence.atlassian.com/conf59/spaces-792498593.html
+  # If missing or if empty, the list of spaces will be populated using
+  # the confluence API via /rest/api/space?&limit=1000&type=global&status=current
   spaces: [ENG]
 
   # Authentication credentials towards Confluence API
