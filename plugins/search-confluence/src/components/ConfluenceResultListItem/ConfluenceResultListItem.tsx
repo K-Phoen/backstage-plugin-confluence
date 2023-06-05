@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from '@backstage/core-components';
 import {
   IndexableDocument,
@@ -45,12 +45,14 @@ export type IndexableConfluenceDocument = IndexableDocument & {
 };
 
 export interface ConfluenceResultItemProps {
+  icon?: ReactNode | ((result: any) => ReactNode);
   result?: IndexableDocument;
   highlight?: ResultHighlight;
   rank?: number;
 }
 
 export const ConfluenceResultListItem = ({
+  icon,
   result,
   highlight,
 }: ConfluenceResultItemProps) => {
@@ -109,17 +111,22 @@ export const ConfluenceResultListItem = ({
     </>
   );
 
+  let resultIcon: ConfluenceResultItemProps['icon'] = (
+    <img
+      width="20"
+      height="20"
+      src="https://cdn.worldvectorlogo.com/logos/confluence-1.svg"
+      alt="confluence logo"
+    />
+  );
+  if (icon) {
+    resultIcon = typeof icon === 'function' ? icon(result) : icon;
+  }
+
   return (
     <>
       <ListItem alignItems="center">
-        <ListItemIcon title="Confluence document">
-          <img
-            width="20"
-            height="20"
-            src="https://cdn.worldvectorlogo.com/logos/confluence-1.svg"
-            alt="confluence logo"
-          />
-        </ListItemIcon>
+        <ListItemIcon title="Confluence document">{resultIcon}</ListItemIcon>
         <ListItemText
           primary={title}
           secondary={excerpt}
