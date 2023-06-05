@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Link } from '@backstage/core-components';
 import {
   IndexableDocument,
@@ -8,14 +8,15 @@ import { HighlightedSearchResultText } from '@backstage/plugin-search-react';
 import {
   Box,
   Breadcrumbs,
-  Divider,
-  ListItem,
   ListItemIcon,
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
+  flexContainer: {
+    flexWrap: 'wrap',
+  },
   lastUpdated: {
     display: 'block',
     marginTop: '0.2rem',
@@ -29,6 +30,8 @@ const useStyles = makeStyles({
     marginTop: '1rem',
   },
   itemText: {
+    width: '100%',
+    marginBottom: '1rem',
     wordBreak: 'break-all',
   },
 });
@@ -45,12 +48,14 @@ export type IndexableConfluenceDocument = IndexableDocument & {
 };
 
 export interface ConfluenceResultItemProps {
+  icon?: ReactNode | ((result: any) => ReactNode);
   result?: IndexableDocument;
   highlight?: ResultHighlight;
   rank?: number;
 }
 
 export const ConfluenceResultListItem = ({
+  icon,
   result,
   highlight,
 }: ConfluenceResultItemProps) => {
@@ -109,26 +114,29 @@ export const ConfluenceResultListItem = ({
     </>
   );
 
+  let resultIcon: ConfluenceResultItemProps['icon'] = (
+    <img
+      width="20"
+      height="20"
+      src="https://cdn.worldvectorlogo.com/logos/confluence-1.svg"
+      alt="confluence logo"
+    />
+  );
+  if (icon) {
+    resultIcon = typeof icon === 'function' ? icon(result) : icon;
+  }
+
   return (
     <>
-      <ListItem alignItems="center">
-        <ListItemIcon title="Confluence document">
-          <img
-            width="20"
-            height="20"
-            src="https://cdn.worldvectorlogo.com/logos/confluence-1.svg"
-            alt="confluence logo"
-          />
-        </ListItemIcon>
+      <ListItemIcon title="Confluence document">{resultIcon}</ListItemIcon>
+      <div className={classes.flexContainer}>
         <ListItemText
           primary={title}
           secondary={excerpt}
           className={classes.itemText}
           primaryTypographyProps={{ variant: 'h6' }}
         />
-      </ListItem>
-
-      <Divider component="li" />
+      </div>
     </>
   );
 };
