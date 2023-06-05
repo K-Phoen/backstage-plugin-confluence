@@ -8,14 +8,15 @@ import { HighlightedSearchResultText } from '@backstage/plugin-search-react';
 import {
   Box,
   Breadcrumbs,
-  Divider,
-  ListItem,
   ListItemIcon,
   ListItemText,
   makeStyles,
 } from '@material-ui/core';
 
 const useStyles = makeStyles({
+  flexContainer: {
+    flexWrap: 'wrap',
+  },
   lastUpdated: {
     display: 'block',
     marginTop: '0.2rem',
@@ -29,6 +30,8 @@ const useStyles = makeStyles({
     marginTop: '1rem',
   },
   itemText: {
+    width: '100%',
+    marginBottom: '1rem',
     wordBreak: 'break-all',
   },
 });
@@ -125,17 +128,15 @@ export const ConfluenceResultListItem = ({
 
   return (
     <>
-      <ListItem alignItems="center">
-        <ListItemIcon title="Confluence document">{resultIcon}</ListItemIcon>
+      <ListItemIcon title="Confluence document">{resultIcon}</ListItemIcon>
+      <div className={classes.flexContainer}>
         <ListItemText
           primary={title}
           secondary={excerpt}
           className={classes.itemText}
           primaryTypographyProps={{ variant: 'h6' }}
         />
-      </ListItem>
-
-      <Divider component="li" />
+      </div>
     </>
   );
 };
