@@ -13,7 +13,8 @@
     "test": "backstage-cli test",
     "test:all": "backstage-cli test --all",
     "lint": "backstage-cli repo lint --since origin/main",
-    "lint:all": "backstage-cli repo lint",
+    "lint:all": "concurrently \"backstage-cli repo lint\" \"yarn lint:prettier\"",
+    "lint:prettier": "prettier --ignore-path .gitignore --check .",
     "create-plugin": "backstage-cli create-plugin --scope kphoen --no-private",
     "remove-plugin": "backstage-cli remove-plugin",
     "version": "changeset version && yarn install && (git commit -am 'Update internal dependencies' || true)",
@@ -50,7 +51,7 @@
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{json,md}": [
+    "*.{json,md,yaml,yml}": [
       "prettier --write"
     ]
   },
