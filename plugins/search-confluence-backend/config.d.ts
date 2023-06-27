@@ -37,6 +37,4 @@ export interface AuthPat {
    * @visibility secret
    */
   pat: string;
-
-  usePat: boolean;
 }
