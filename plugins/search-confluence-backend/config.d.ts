@@ -16,16 +16,27 @@ export interface Config {
     /**
      * @visibility backend
      */
-    auth: {
-      /**
-       * @visibility backend
-       */
-      username: string;
-
-      /**
-       * @visibility secret
-       */
-      password: string;
-    };
+    auth: AuthUser | AuthPat;
   };
+}
+
+export interface AuthUser {
+  /**
+   * @visibility backend
+   */
+  username: string;
+
+  /**
+   * @visibility secret
+   */
+  password: string;
+}
+
+export interface AuthPat {
+  /**
+   * @visibility secret
+   */
+  pat: string;
+
+  usePat: boolean;
 }

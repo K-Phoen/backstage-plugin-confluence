@@ -27,3 +27,5 @@ plugins/*/coverage
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+.npmrc
