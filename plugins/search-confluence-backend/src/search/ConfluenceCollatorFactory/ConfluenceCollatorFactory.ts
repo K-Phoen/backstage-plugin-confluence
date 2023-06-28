@@ -200,19 +200,19 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
   }
 
   private async get<T = any>(requestUrl: string): Promise<T> {
-    let base64Auth = Buffer.from(
+    let Authorization = `Basic ${Buffer.from(
       `${this.auth.username}:${this.auth.password}`,
       'utf-8',
-    ).toString('base64');
+    ).toString('base64')}`;
 
     if (this.auth.pat) {
-      base64Auth = this.auth.pat;
+      Authorization = `Bearer ${this.auth.pat}`;
     }
 
     const res = await fetch(requestUrl, {
       method: 'get',
       headers: {
-        Authorization: `Basic ${base64Auth}`,
+        Authorization,
       },
     });
 
