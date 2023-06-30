@@ -5,11 +5,13 @@ import pLimit from 'p-limit';
 import { Readable } from 'stream';
 import { Logger } from 'winston';
 import { ConfluenceDocument, ConfluenceDocumentList, IndexableAncestorRef, IndexableConfluenceDocument } from './types';
+import {compile, compiledFunction, HtmlToTextOptions} from "html-to-text";
 
 type ConfluenceCollatorOptions = {
     logger: Logger;
 
     parallelismLimit: number;
+    html2TextCompile: compiledFunction
 
     wikiUrl: string;
     spaces: string[];
@@ -35,17 +37,21 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     private spaces: string[];
     private auth: {username: string, password: string};
 
+    private html2TextCompile;
+
     static fromConfig(
         config: Config,
         options: {
             logger: Logger,
             parallelismLimit?: number,
+            htmlToTextOptions?: HtmlToTextOptions
         },
     ) {
         return new ConfluenceCollatorFactory({
             logger: options.logger,
 
             parallelismLimit: options.parallelismLimit || 15,
+            html2TextCompile: compile(options.htmlToTextOptions),
 
             wikiUrl: config.getString('confluence.wikiUrl'),
             spaces: config.getStringArray('confluence.spaces'),
@@ -60,6 +66,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         this.logger = options.logger;
 
         this.parallelismLimit = options.parallelismLimit;
+        this.html2TextCompile = options.html2TextCompile;
         this.wikiUrl = options.wikiUrl;
         this.spaces = options.spaces;
         this.auth = options.auth;
@@ -209,6 +216,6 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     }
 
     private stripHtml(input: string): string {
-        return input.replace(/(<([^>]+)>)/gi, "");
+        return this.html2TextCompile(input);
     }
 }
