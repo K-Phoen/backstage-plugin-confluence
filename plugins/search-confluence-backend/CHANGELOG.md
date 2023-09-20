@@ -1,5 +1,9 @@
 # @k-phoen/backstage-plugin-confluence-backend
 
+## 0.1.00
+
+- support for multiple confluence sites
+
 ## 0.0.14
 
 ### Patch Changes
