@@ -6,23 +6,25 @@ import { Readable } from 'stream';
 import { Logger } from 'winston';
 import { ConfluenceDocument, ConfluenceDocumentList, IndexableAncestorRef, IndexableConfluenceDocument } from './types';
 
+type ConfluenceCollatorOptionsItem = {
+  wikiUrl: string;
+  spaces: string[];
+  auth: {
+      username: string;
+      password: string;
+  };
+}
 type ConfluenceCollatorOptions = {
     logger: Logger;
-
     parallelismLimit: number;
-
-    wikiUrl: string;
-    spaces: string[];
-    auth: {
-        username: string;
-        password: string;
-    };
+    sites: ConfluenceCollatorOptionsItem[];
 }
 
 export interface UserEntityDocument extends IndexableDocument {
     kind: string;
     login: string;
     email: string;
+
 }
 
 export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
@@ -31,9 +33,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     private logger: Logger;
 
     private parallelismLimit: number;
-    private wikiUrl: string;
-    private spaces: string[];
-    private auth: {username: string, password: string};
+    private sites: ConfluenceCollatorOptionsItem[];
 
     static fromConfig(
         config: Config,
@@ -42,27 +42,25 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
             parallelismLimit?: number,
         },
     ) {
+        const sites: any[] = config.getConfigArray('confluence.sites').map(c => ({
+            wikiUrl: c.getString('wikiUrl'),
+            spaces: c.getStringArray('spaces'),
+            auth: {
+                username: c.getString('auth.username'),
+                password: c.getString('auth.password'),
+            },
+        }));
         return new ConfluenceCollatorFactory({
             logger: options.logger,
-
+            sites: sites,
             parallelismLimit: options.parallelismLimit || 15,
-
-            wikiUrl: config.getString('confluence.wikiUrl'),
-            spaces: config.getStringArray('confluence.spaces'),
-            auth: {
-                username: config.getString('confluence.auth.username'),
-                password: config.getString('confluence.auth.password'),
-            },
         });
     }
 
     private constructor(options: ConfluenceCollatorOptions) {
         this.logger = options.logger;
-
+        this.sites = options.sites;
         this.parallelismLimit = options.parallelismLimit;
-        this.wikiUrl = options.wikiUrl;
-        this.spaces = options.spaces;
-        this.auth = options.auth;
     }
 
     async getCollator() {
@@ -70,35 +68,37 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     }
 
     private async *execute(): AsyncGenerator<IndexableConfluenceDocument> {
-        const spacesList = await this.getSpaces();
-        const documentsList = await this.getDocumentsFromSpaces(spacesList);
+        for(const site of this.sites){
+            const spacesList = await this.getSpaces(site);
+            const documentsList = await this.getDocumentsFromSpaces(site, spacesList);
 
-        const limit = pLimit(this.parallelismLimit);
-        const documentsInfo = documentsList.map(document => limit(async () => {
-            try {
-                return this.getDocumentInfo(document);
-            } catch (err) {
-                this.logger.warn(`error while indexing document "${document}"`, err);
+            const limit = pLimit(this.parallelismLimit);
+            const documentsInfo = documentsList.map(document => limit(async () => {
+                try {
+                    return this.getDocumentInfo(site, document);
+                } catch (err) {
+                    this.logger.warn(`error while indexing document "${document}"`, err);
+                }
+
+                return [];
+            }));
+
+            const safePromises = documentsInfo.map(promise => promise.catch(error => {
+                this.logger.warn(error);
+
+                return [];
+            }));
+
+            const documents = (await Promise.all(safePromises)).flat();
+
+            for (const document of documents) {
+                yield document;
             }
-
-            return [];
-        }));
-
-        const safePromises = documentsInfo.map(promise => promise.catch(error => {
-            this.logger.warn(error);
-
-            return [];
-        }));
-
-        const documents = (await Promise.all(safePromises)).flat();
-
-        for (const document of documents) {
-            yield document;
         }
     }
 
-    private async getSpaces(): Promise<string[]> {
-        return this.spaces;
+    private async getSpaces(site: ConfluenceCollatorOptionsItem): Promise<string[]> {
+        return site.spaces;
     }
 
     /*
@@ -120,25 +120,25 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
     }
     */
 
-    private async getDocumentsFromSpaces(spaces: string[]): Promise<string[]> {
+    private async getDocumentsFromSpaces(site: ConfluenceCollatorOptionsItem, spaces: string[]): Promise<string[]> {
         const documentsList = [];
 
         for (const space of spaces) {
-            documentsList.push(...(await this.getDocumentsFromSpace(space)));
+            documentsList.push(...(await this.getDocumentsFromSpace(site, space)));
         }
 
         return documentsList;
     }
 
-    private async getDocumentsFromSpace(space: string): Promise<string[]> {
+    private async getDocumentsFromSpace(site: ConfluenceCollatorOptionsItem, space: string): Promise<string[]> {
         const documentsList = [];
 
         this.logger.info(`exploring space ${space}`);
 
         let next = true;
-        let requestUrl = `${this.wikiUrl}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
+        let requestUrl = `${site.wikiUrl}/rest/api/content?limit=1000&status=current&spaceKey=${space}`;
         while (next) {
-            const data = await this.get<ConfluenceDocumentList>(requestUrl);
+            const data = await this.get<ConfluenceDocumentList>(site, requestUrl);
             if (!data.results) {
                 break;
             }
@@ -146,7 +146,7 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
             documentsList.push(...data.results.map(result => result._links.self));
 
             if (data._links.next) {
-                requestUrl = `${this.wikiUrl}${data._links.next}`;
+                requestUrl = `${site.wikiUrl}${data._links.next}`;
             } else {
                 next = false;
             }
@@ -155,10 +155,10 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         return documentsList;
     }
 
-    private async getDocumentInfo(documentUrl: string): Promise<IndexableConfluenceDocument[]> {
+    private async getDocumentInfo(site: ConfluenceCollatorOptionsItem, documentUrl: string): Promise<IndexableConfluenceDocument[]> {
         this.logger.debug(`fetching document content ${documentUrl}`);
 
-        const data = await this.get<ConfluenceDocument>(`${documentUrl}?expand=body.storage,space,ancestors,version`);
+        const data = await this.get<ConfluenceDocument>(site, `${documentUrl}?expand=body.storage,space,ancestors,version`);
         if (!data.status || data.status !== 'current') {
             return [];
         }
@@ -166,21 +166,21 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         const ancestors: IndexableAncestorRef[] = [
             {
                 title: data.space.name,
-                location: `${this.wikiUrl}${data.space._links.webui}`,
+                location: `${site.wikiUrl}${data.space._links.webui}`,
             },
         ];
 
         data.ancestors.forEach(ancestor => {
             ancestors.push({
                 title: ancestor.title,
-                location: `${this.wikiUrl}${ancestor._links.webui}`,
+                location: `${site.wikiUrl}${ancestor._links.webui}`,
             });
         });
 
         return [{
             title: data.title,
             text: this.stripHtml(data.body.storage.value),
-            location: `${this.wikiUrl}${data._links.webui}`,
+            location: `${site.wikiUrl}${data._links.webui}`,
             spaceKey: data.space.key,
             spaceName: data.space.name,
             ancestors: ancestors,
@@ -190,8 +190,8 @@ export class ConfluenceCollatorFactory implements DocumentCollatorFactory {
         }];
     }
 
-    private async get<T = any>(requestUrl: string): Promise<T> {
-        const base64Auth = Buffer.from(`${this.auth.username}:${this.auth.password}`, 'utf-8').toString('base64');
+    private async get<T = any>(site: ConfluenceCollatorOptionsItem, requestUrl: string): Promise<T> {
+        const base64Auth = Buffer.from(`${site.auth.username}:${site.auth.password}`, 'utf-8').toString('base64');
         const res = await fetch(requestUrl, {
             method: 'get',
             headers: {

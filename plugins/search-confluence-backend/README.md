@@ -17,20 +17,21 @@ Configure the plugin in `app-config.yaml`:
 ```yaml
 # app-config.yaml
 confluence:
-  # Confluence base URL for wiki API
-  # Typically: https://{org-name}.atlassian.net/wiki
-  wikiUrl: https://org-name.atlassian.net/wiki
+  sites:
+      # Confluence base URL for wiki API
+      # Typically: https://{org-name}.atlassian.net/wiki
+      - wikiUrl: https://org-name.atlassian.net/wiki
 
-  # List of spaces to index
-  # See https://confluence.atlassian.com/conf59/spaces-792498593.html
-  spaces: [ENG]
+       # List of spaces to index
+       # See https://confluence.atlassian.com/conf59/spaces-792498593.html
+       spaces: [ENG]
 
-  # Authentication credentials towards Confluence API
-  auth:
-    username: ${CONFLUENCE_USERNAME}
-    # While Confluence supports BASIC authentication, using an API token is preferred.
-    # See: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
-    password: ${CONFLUENCE_PASSWORD}
+       # Authentication credentials towards Confluence API
+       auth:
+         username: ${CONFLUENCE_USERNAME}
+         # While Confluence supports BASIC authentication, using an API token is preferred.
+         # See: https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/
+         password: ${CONFLUENCE_PASSWORD}
 ```
 
 Enable Confluence documents indexing in the search engine:
